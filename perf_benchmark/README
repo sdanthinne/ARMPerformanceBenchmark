@@ -1,0 +1,34 @@
+
+
+things to add:
+add loop argument to change how many times the loop is ordered so that we can 
+calculate the amount of instructions are being used per loop
+
+Stack allocation: allocA
+malloc time constant
+
+run with large sizes
+implement load-store result like picture 
+(expect CPI of 1.333 ish... maybe add 1 for average memory access time 
+(look at pics))
+
+assume most instructions take 1 cycle, then calculated expected CPI with 
+load-use delay of 4. Memory accesses to L1 cache should be around 2 cycles
+
+Make array 32k to fit into L1 cache to eliminate memory problems
+Should be less than 8k elements
+
+
+should be a cycle delay of 4 
+
+Next things to do:
+Since results are unintuitive,bug could be causing significant memory issue
+(make it right and the cache should be good)
+
+maybe make visuals for how the cpi changes over samples
+look at gprof
+make sure not going into systemcall
+look at changing the number of times we go over the L1 cache, 
+   and make graph about it
+   start saving the data!
+
