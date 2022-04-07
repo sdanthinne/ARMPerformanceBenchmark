@@ -12,6 +12,7 @@
 #define RAND_SEED 1
 #define USAGE_N_EXIT do{fprintf(stderr,"Usage incorrect, needs 1 arg\n");}while(0);
 
+extern int test_load_use_chain_l1(int *, int *, int);
 /**
  * Returns a pointer to the head of the array of random ints.
  *
