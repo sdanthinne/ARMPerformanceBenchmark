@@ -6,8 +6,9 @@ test_load_use_chain_l1:
     * cache size. x0 is the array location in memory, which should be less than
     * the size of the L1 cache. x1 is a dummy register, and x2 is the max 
     * number of iterations.
+    * 8 cycles per 6 instructions for the PI CPI of ~1.3
+    * load use of 4 for raspberry pi
     */
-   //setup
    #define min_ptr x0
    #define max_ptr x1
    #define iterations x2 //how many times over l1 cache
@@ -29,6 +30,9 @@ test_load_use_chain_l1_loop_1:
    cmp iterations, 0
    bne test_load_use_chain_l1_loop_2
    ret
+
+test_load_use_chain_l1_loop_1b:
+load, add cmp negate, str, bne
 
 .global test_load_use
 /**

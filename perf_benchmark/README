@@ -27,6 +27,7 @@ Since results are unintuitive,bug could be causing significant memory issue
 
 maybe make visuals for how the cpi changes over samples
 look at gprof
+
 make sure not going into systemcall
 look at changing the number of times we go over the L1 cache, 
    and make graph about it
