@@ -10,7 +10,7 @@ def main():
       cycles = []
       l1_loop_total = 100000
       for i in range(iterations):
-         output = run(f'perf stat -d ./testNoSyscall {l1_loop_total}', capture_output=True, shell=True, text=True)
+         output = run(f'perf_4.9 stat -d ./testNoSyscall {l1_loop_total}', capture_output=True, shell=True, text=True)
          output_str = output.stderr
          out_arr = output_str.split('\n')
          cycle = int(out_arr[7].split()[0].replace(',',''))
