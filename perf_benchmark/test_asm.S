@@ -1,6 +1,6 @@
 
-.global test_load_use_chain_l1
-test_load_use_chain_l1:
+.global test_load_use_chain_l1_1
+test_load_use_chain_l1_1:
    /**
     * This test uses a complete dependency chain, and only iterates over the L1
     * cache size. x0 is the array location in memory, which should be less than
@@ -15,24 +15,42 @@ test_load_use_chain_l1:
    #define temp_reg_1 x3
    #define min_ptr_t x4
    
-test_load_use_chain_l1_loop_2:
+test_load_use_chain_l1_1_loop_2:
    mov min_ptr_t, min_ptr
 
-test_load_use_chain_l1_loop_1:
+test_load_use_chain_l1_1_loop_1:
    ldr temp_reg_1,[min_ptr_t]
    neg temp_reg_1, temp_reg_1
    str temp_reg_1,[min_ptr_t]
    add min_ptr_t, min_ptr_t, #4
    cmp min_ptr_t,max_ptr
-   bne test_load_use_chain_l1_loop_1
+   bne test_load_use_chain_l1_1_loop_1
 
    sub iterations, iterations, #1
    cmp iterations, 0
-   bne test_load_use_chain_l1_loop_2
+   bne test_load_use_chain_l1_1_loop_2
    ret
 
-test_load_use_chain_l1_loop_1b:
-load, add cmp negate, str, bne
+.global test_load_use_chain_l1_2:
+test_load_use_chain_l1_2:
+/** load, add cmp negate, str, bne
+ * This test uses a different dependency chain that should change the CPI
+ */
+test_load_use_chain_l1_2_loop_2:
+   mov min_ptr_t, min_ptr
+
+test_load_use_chain_l1_2_loop_1:
+   ldr temp_reg_1,[min_ptr_t]
+   neg temp_reg_1, temp_reg_1
+   str temp_reg_1,[min_ptr_t]
+   add min_ptr_t, min_ptr_t, #4
+   cmp min_ptr_t,max_ptr
+   bne test_load_use_chain_l1_2_loop_1
+
+   sub iterations, iterations, #1
+   cmp iterations, 0
+   bne test_load_use_chain_l1_2_loop_2
+   ret
 
 .global test_load_use
 /**
