@@ -20,7 +20,7 @@ test_load_use_chain_l1_1_loop_2:
 
 test_load_use_chain_l1_1_loop_1:
    ldr temp_reg_1,[min_ptr_t]
-   neg temp_reg_1, temp_reg_1
+   sub temp_reg_1, temp_reg_1, #1
    str temp_reg_1,[min_ptr_t]
    add min_ptr_t, min_ptr_t, #4
    cmp min_ptr_t,max_ptr
@@ -31,20 +31,20 @@ test_load_use_chain_l1_1_loop_1:
    bne test_load_use_chain_l1_1_loop_2
    ret
 
-.global test_load_use_chain_l1_2:
+.global test_load_use_chain_l1_2
 test_load_use_chain_l1_2:
 /** load, add cmp negate, str, bne
- * This test uses a different dependency chain that should change the CPI
+ * This test uses a different dependency chain that should lower the cpi to about 1?
  */
 test_load_use_chain_l1_2_loop_2:
    mov min_ptr_t, min_ptr
 
 test_load_use_chain_l1_2_loop_1:
    ldr temp_reg_1,[min_ptr_t]
-   neg temp_reg_1, temp_reg_1
-   str temp_reg_1,[min_ptr_t]
    add min_ptr_t, min_ptr_t, #4
    cmp min_ptr_t,max_ptr
+   sub temp_reg_1, temp_reg_1, 1 //does update the condition flags, and also is pseudo instruction?
+   str temp_reg_1,[min_ptr_t,#-4 ]
    bne test_load_use_chain_l1_2_loop_1
 
    sub iterations, iterations, #1
