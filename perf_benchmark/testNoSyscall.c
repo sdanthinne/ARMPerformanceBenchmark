@@ -12,7 +12,8 @@
 #define RAND_SEED 1
 #define USAGE_N_EXIT do{fprintf(stderr,"Usage incorrect, needs 1 arg\n");}while(0);
 
-extern int test_load_use_chain_l1(int *, int *, int);
+extern int test_load_use_chain_l1_1(int *, int *, int);
+extern int test_load_use_chain_l1_2(int *, int *, int);
 /**
  * Returns a pointer to the head of the array of random ints.
  *
@@ -44,7 +45,7 @@ int main(int argc, char * argv[])
       USAGE_N_EXIT
       return -1;
    }
-   return test_load_use_chain_l1_2(rand_array,rand_array+SIZE_L1_CACHE/sizeof(int),
+   return test_load_use_chain_l1_1(rand_array,rand_array+SIZE_L1_CACHE/sizeof(int),
       atoi(argv[1])); 
    //return test_load_use(NUM_TESTS,rand_array);
 }
