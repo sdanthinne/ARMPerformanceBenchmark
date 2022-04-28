@@ -1,5 +1,9 @@
 CC=gcc
-CFLAGS=-ggdb -O2
+CFLAGS=-ggdb -O2 
+
+ifeq ($(GPROF),1)
+	CFLAGS += -pg
+endif
 
 all: main
 

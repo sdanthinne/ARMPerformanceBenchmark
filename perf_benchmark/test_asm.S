@@ -1,32 +1,55 @@
-.global test_load_use_chain_l1
-test_load_use_chain_l1:
+.global test_load_use_chain_l1_1
+test_load_use_chain_l1_1:
    /**
     * This test uses a complete dependency chain, and only iterates over the L1
     * cache size. r0 is the array location in memory, which should be less than
     * the size of the L1 cache. r1 is a dummy register, and r2 is the mar 
     * number of iterations.
+    * 8 cycles per 6 instructions for the PI CPI of ~1.3
+    * load use of 4 for raspberry pi
     */
    //setup
    #define min_ptr r0
-   #define mar_ptr r1
+   #define max_ptr r1
    #define iterations r2 //how many times over l1 cache
    #define temp_reg_1 r3
    #define min_ptr_t r4
    
-test_load_use_chain_l1_loop_2:
+test_load_use_chain_l1_1_loop_2:
    mov min_ptr_t, min_ptr
 
-test_load_use_chain_l1_loop_1:
+test_load_use_chain_l1_1_loop_1:
    ldr temp_reg_1,[min_ptr_t]
-   neg temp_reg_1, temp_reg_1
+   sub temp_reg_1, temp_reg_1, #1
    str temp_reg_1,[min_ptr_t]
    add min_ptr_t, min_ptr_t, #4
-   cmp min_ptr_t,mar_ptr
-   bne test_load_use_chain_l1_loop_1
+   cmp min_ptr_t,max_ptr
+   bne test_load_use_chain_l1_1_loop_1
 
    sub iterations, iterations, #1
    cmp iterations, #0
-   bne test_load_use_chain_l1_loop_2
+   bne test_load_use_chain_l1_1_loop_2
+   bx lr
+
+.global test_load_use_chain_l1_2
+test_load_use_chain_l1_2:
+/** load, add cmp negate, str, bne
+ * This test uses a different dependency chain that should lower the cpi to about 1?
+ */
+test_load_use_chain_l1_2_loop_2:
+   mov min_ptr_t, min_ptr
+
+test_load_use_chain_l1_2_loop_1:
+   ldr temp_reg_1,[min_ptr_t]
+   add min_ptr_t, min_ptr_t, #4
+   cmp min_ptr_t,max_ptr
+   sub temp_reg_1, temp_reg_1, #1 //does update the condition flags, and also is pseudo instruction?
+   str temp_reg_1,[min_ptr_t,#-4 ]
+   bne test_load_use_chain_l1_2_loop_1
+
+   sub iterations, iterations, #1
+   cmp iterations, #0
+   bne test_load_use_chain_l1_2_loop_2
    bx lr
 
 .global test_load_use
