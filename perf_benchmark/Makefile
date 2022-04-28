@@ -13,6 +13,9 @@ main: mainTest.c test_asm.o
 testNoSyscall: testNoSyscall.c test_asm.o
 	$(CC) $^ -o $@ $(CFLAGS)
 
+testTimer: testTimer.c test_asm.o
+	$(CC) $^ -o $@ $(CFLAGS)
+
 test_asm.o: test_asm.S
 	$(CC) -c $^ -o $@ $(CFLAGS) 
 
