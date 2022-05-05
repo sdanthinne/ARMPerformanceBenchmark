@@ -1,5 +1,5 @@
 CC=gcc
-CFLAGS=-ggdb -O2 
+CFLAGS= -O2 -ggdb
 
 ifeq ($(GPROF),1)
 	CFLAGS += -pg
@@ -18,6 +18,9 @@ testTimer: testTimer.c test_asm.o
 
 test_asm.o: test_asm.S
 	$(CC) -c $^ -o $@ $(CFLAGS) 
+
+test_asm_only: test_asm_only.S
+	$(CC) $^ -o $@ $(CFLAGS) 
 
 clean:
 	rm -f *.o main
