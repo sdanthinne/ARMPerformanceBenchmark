@@ -15,6 +15,8 @@
 #define USAGE_N_EXIT do{fprintf(stderr,"Usage incorrect, needs 1 arg\n");}while(0);
 #define SEL_CLK CLOCK_REALTIME
 
+extern int test_load_use_chain_l1_2(int *, int *, int);
+extern int test_load_use_chain_l1_1(int *, int *, int);
 /**
  * Returns a pointer to the head of the array of random ints.
  *
@@ -49,9 +51,8 @@ int main(int argc, char * argv[])
 
    struct timespec spec_b;
    struct timespec spec_a;
-   
    clock_gettime(SEL_CLK,&spec_b);
-   test_load_use_chain_l1_2(rand_array,rand_array+SIZE_L1_CACHE/sizeof(int),
+   test_load_use_chain_l1_1(rand_array,rand_array+SIZE_L1_CACHE/sizeof(int),
       atoi(argv[1]));
    clock_gettime(SEL_CLK,&spec_a);
    printf("%.10lf\n",((double)spec_a.tv_sec-spec_b.tv_sec) + 
