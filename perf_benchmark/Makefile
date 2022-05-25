@@ -1,5 +1,5 @@
 CC=gcc
-CFLAGS= -O2 -ggdb
+CFLAGS= -Og -ggdb
 
 ifeq ($(GPROF),1)
 	CFLAGS += -pg
